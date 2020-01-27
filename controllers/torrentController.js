@@ -1,7 +1,7 @@
 const express = require('express');
 const Router = express.Router();
-const checkCache = require('../helpers/checkRedisCache');
-const checkTorrentCache = require('../helpers/checkTorrentCache')
+const checkCache = require('../middlewares/checkRedisCache');
+const checkTorrentCache = require('../middlewares/checkTorrentCache')
 
 const redis = require('redis');
 const port_redis = process.env.PORT || 6379;

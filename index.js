@@ -10,7 +10,7 @@ const torrentsController = require('./controllers/torrentController');
 const torrentFeed = require('./controllers/torrentFeed');
 
 // Check Redis Cache Middleware
-const { checkCache } = require('./helpers/checkRedisCache');
+const { checkCache } = require('./middlewares/checkRedisCache');
 
 
 const app = express();
