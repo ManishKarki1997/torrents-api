@@ -3,6 +3,7 @@
 > API for scraping torrents from YTS, 1337x and Nyaa.si with Caching
 
 The app for this api is at https://github.com/ManishKarki1997/torrents
+![](https://media.giphy.com/media/mCnTJNsJWyLZXd0vOv/giphy.gif)
 
 # How to install
 
