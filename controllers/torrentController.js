@@ -78,6 +78,7 @@ Router.get('/torrent', checkTorrentCache, async (req, res) => {
 
         torrents = torrentSource === 'YTS' ? await scrapeYTSLink(url) : await get1337Magnet(url);
 
+
         redis_client.setex(url.toLowerCase(), 3600, JSON.stringify(torrents));
 
 

@@ -3,14 +3,12 @@ const axios = require('axios');
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const redis = require('redis');
 
 
 const torrentsController = require('./controllers/torrentController');
 const torrentFeed = require('./controllers/torrentFeed');
 
-// Check Redis Cache Middleware
-const { checkCache } = require('./middlewares/checkRedisCache');
+
 
 
 const app = express();

@@ -24,16 +24,20 @@ async function promisesArray(torrents) {
 }
 
 async function get1337Magnet(url) {
-    let torrent = {};
+
     const html = await getHTML(url);
     const $ = cheerio.load(html);
     const magnet = $('.clearfix ul li a').attr('href') || "";
     const torrentSize = $('ul.list').eq(1).find('li').eq('3').find('span').text();
     const torrentDownloads = $('ul.list').eq(2).find('li').eq(0).find('span').text();
-    torrent.magnet = magnet;
-    torrent.torrentSize = torrentSize;
-    torrent.torrentDownloads = torrentDownloads;
+    const torrentDescription = $('#description').find('p').html();
 
+    let torrent = {
+        magnet,
+        torrentSize,
+        torrentDownloads,
+        torrentDescription
+    }
     return torrent;
 }
 

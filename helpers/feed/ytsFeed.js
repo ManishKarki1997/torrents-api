@@ -11,23 +11,23 @@ const ytsFeedScraper = async function () {
     let latestMoviesTorrents = [];
 
 
-    $('.hero__cards .card-container>.card').each((i, el) => {
+    $('.hero__cards .card-container .card').each((i, el) => {
 
         let movieName = $(el).find('.image-container-link').attr('title');
         let torrentURL = 'https://yts.ms' + $(el).find('.image-container-link').attr('href');
-        let moviePoster = $(el).find('.hero__card-img').attr('src');
+        // let moviePoster = $(el).find('.hero__card-img').attr('src');
         let releaseYear = $(el).find('span').text();
 
-        popularDownloads.push({ movieName, torrentURL, moviePoster, releaseYear, actualTorrent: false });
+        popularDownloads.push({ movieName, torrentURL, releaseYear, actualTorrent: false });
     });
 
-    $('.movies__main .card-container>.card').each((i, el) => {
+    $('.movies__main .card-container .card').each((i, el) => {
         let movieName = $(el).find('.image-container-link').attr('title');
         let torrentURL = 'https://yts.ms' + $(el).find('.image-container-link').attr('href');
-        let moviePoster = $(el).find('.hero__card-img').attr('src');
+        // let moviePoster = $(el).find('.hero__card-img').attr('');
         let releaseYear = $(el).find('span').text();
 
-        latestMoviesTorrents.push({ movieName, torrentURL, moviePoster, releaseYear, actualTorrent: false });
+        latestMoviesTorrents.push({ movieName, torrentURL, releaseYear, actualTorrent: false });
 
     });
 

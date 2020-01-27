@@ -3,10 +3,9 @@ const port_redis = process.env.PORT || 6379;
 const redis_client = redis.createClient(port_redis);
 
 
-checkTorrentCache = (req, res, next) => {
-    const { url, torrentSource } = req.query;
+checkCache = (req, res, next) => {
 
-    redis_client.get(url.toLowerCase(), (err, data) => {
+    redis_client.get('torrent-feeds', (err, data) => {
 
         if (err) {
             res.status(500).send(err);
@@ -17,11 +16,7 @@ checkTorrentCache = (req, res, next) => {
             res.send({
                 error: false,
                 cached: true,
-                payload: {
-                    torrents,
-                    actualTorrent: true,
-                    torrentSource
-                }
+                payload: torrents
             });
         } else {
             //if it doesn't exist, proceed forward
@@ -30,4 +25,4 @@ checkTorrentCache = (req, res, next) => {
     });
 };
 
-module.exports = checkTorrentCache;
+module.exports = checkCache;
