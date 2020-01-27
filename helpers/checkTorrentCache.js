@@ -3,10 +3,10 @@ const port_redis = process.env.PORT || 6379;
 const redis_client = redis.createClient(port_redis);
 
 
-checkCache = (req, res, next) => {
-    const { searchTerm } = req.query;
+checkTorrentCache = (req, res, next) => {
+    const { url, torrentSource } = req.query;
 
-    redis_client.get(searchTerm.toLowerCase(), (err, data) => {
+    redis_client.get(url.toLowerCase(), (err, data) => {
 
         if (err) {
             res.status(500).send(err);
@@ -16,7 +16,11 @@ checkCache = (req, res, next) => {
             res.send({
                 error: false,
                 cached: true,
-                data
+                payload: {
+                    torrents: data,
+                    actualTorrent: true,
+                    torrentSource
+                }
             });
         } else {
             //if it doesn't exist, proceed forward
@@ -25,4 +29,4 @@ checkCache = (req, res, next) => {
     });
 };
 
-module.exports = checkCache;
+module.exports = checkTorrentCache;

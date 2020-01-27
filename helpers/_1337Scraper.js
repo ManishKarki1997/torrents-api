@@ -1,7 +1,5 @@
 const cheerio = require('cheerio');
-const axios = require('axios');
 const getHTML = require('./getHTML');
-let torrents = [];
 
 async function asyncMagnetScrapePromise(item) {
     return getMagnet(item);
@@ -25,15 +23,23 @@ async function promisesArray(torrents) {
     // }))
 }
 
-async function getMagnet(url) {
-    const html = await getHTML('htts://1337x.to' + url);
+async function get1337Magnet(url) {
+    let torrent = {};
+    const html = await getHTML(url);
     const $ = cheerio.load(html);
-    const magnet = $('.clearfix ul li a').attr('href') || "Not Found";
-    return magnet;
+    const magnet = $('.clearfix ul li a').attr('href') || "";
+    const torrentSize = $('ul.list').eq(1).find('li').eq('3').find('span').text();
+    const torrentDownloads = $('ul.list').eq(2).find('li').eq(0).find('span').text();
+    torrent.magnet = magnet;
+    torrent.torrentSize = torrentSize;
+    torrent.torrentDownloads = torrentDownloads;
+
+    return torrent;
 }
 
 async function scrape1337x(_1337xURL) {
 
+    let torrents = [];
     const html = await getHTML(_1337xURL);
 
     const $ = cheerio.load(html);
@@ -53,14 +59,15 @@ async function scrape1337x(_1337xURL) {
 
         scrapedResults.push({
             torrentName,
-            torrentURL,
+            torrentURL: 'https://1337x.to' + torrentURL,
             torrentSeeds,
-            torrentLeeches
+            torrentLeeches,
+            actualTorrent: false
         })
     })
 
-    // got weird result to 'undefined' torrentURL so filtering out the undefined ones
-    torrents = scrapedResults.filter(torr => torr.torrentURL !== undefined);
+    // got weird result to 'undefined' torrentURL or empty torrent names so filtering them out
+    torrents = scrapedResults.filter(torr => torr.torrentName !== '');
 
     return torrents;
 
@@ -68,3 +75,4 @@ async function scrape1337x(_1337xURL) {
 
 exports.scrape1337x = scrape1337x;
 exports.promisesArray = promisesArray;
+exports.get1337Magnet = get1337Magnet;

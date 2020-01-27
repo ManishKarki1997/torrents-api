@@ -5,7 +5,9 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const redis = require('redis');
 
-const torrentsController = require('./torrentController');
+
+const torrentsController = require('./controllers/torrentController');
+const torrentFeed = require('./controllers/torrentFeed');
 
 // Check Redis Cache Middleware
 const { checkCache } = require('./helpers/checkRedisCache');
@@ -18,9 +20,11 @@ app.use(bodyParser.json());
 
 app.use(cors());
 
-app.use('/search', torrentsController);
+app.use('/api/search', torrentsController);
+app.use('/api/feed', torrentFeed);
 
-const PORT = process.env.PORT || 5000;
+
+const PORT = process.env.PORT || 3000;
 
 
 // const searchTerm = process.argv.slice(2)[0];
